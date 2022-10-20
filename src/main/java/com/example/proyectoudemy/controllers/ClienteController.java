@@ -1,6 +1,7 @@
 package com.example.proyectoudemy.controllers;
 
 import com.example.proyectoudemy.dao.IClienteDao;
+import com.example.proyectoudemy.models.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -16,9 +17,25 @@ public class ClienteController {
 
     @RequestMapping(value = "/listar", method = RequestMethod.GET)
     public String listar(Model model){
-        model.addAttribute("titulo", "listado de cliente");
+        model.addAttribute("titulo", "Listado de Cliente");
         model.addAttribute("clientes", clienteDao.findAll());
         return "listar";
+    }
+
+    @RequestMapping(value = "/form")
+    public String crear(Model model){
+        Cliente cliente = new Cliente();
+
+        model.addAttribute("titulo", "Formulario de Cliente");
+        model.addAttribute("cliente", cliente);
+
+        return "form";
+    }
+
+    @RequestMapping(value = "/form", method = RequestMethod.POST)
+    public String guardar(Cliente cliente){
+        clienteDao.save(cliente);
+        return "redirect:listar";
     }
 
 }
