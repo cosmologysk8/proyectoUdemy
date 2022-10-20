@@ -31,4 +31,11 @@ public class Cliente implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date createAt;
 
+    // PrePersist lo que hace es invocar este metido antes de que se inserte los datos nuevos
+    //en la BBDD
+    @PrePersist
+    public void prePersist(){
+        createAt = new Date();
+    }
+
 }
