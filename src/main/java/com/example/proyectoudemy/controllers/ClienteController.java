@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -29,6 +30,19 @@ public class ClienteController {
         model.addAttribute("titulo", "Formulario de Cliente");
         model.addAttribute("cliente", cliente);
 
+        return "form";
+    }
+
+    @RequestMapping(value = "/form/{id}")
+    public String editarCliente(@PathVariable(value = "id") Long id, Model model){
+        Cliente cliente = null;
+        if (id >0){
+            cliente = clienteDao.findOne(id);
+        }else {
+            return "redirect:/listar";
+        }
+        model.addAttribute("cliente", cliente);
+        model.addAttribute("titulo", "Editar  Cliente");
         return "form";
     }
 
